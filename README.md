@@ -14,7 +14,7 @@ npm install
 ```
 or
 ```
-"npm install {dep} --save"
+npm install {dep} --save
 ```
 
 ## Prerequisite
@@ -47,7 +47,7 @@ Follow the instructions on the [Chainparser](https://github.com/antonnell/oriCha
 
 
 ```
-node import{Chain}Transactions.js
+node import{chain}Transactions.js
 ```
 
 {chain} =
