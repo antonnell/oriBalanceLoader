@@ -14,7 +14,7 @@ npm install
 ```
 or
 ```
-"npm install {dep} --save" as well.
+"npm install {dep} --save"
 ```
 
 ## Prerequisite
@@ -22,19 +22,15 @@ or
 
 ### PostgreSQL DB setup
 
-Create the postgreSQL DB:
-
-```
-./postgres/createDB.sql
-```
+Create the postgreSQL DB: Setup scripts are in [postgres/createDB.sql](https://github.com/antonnell/oriBalanceLoader/blob/master/postgres/createDB.sql)
 
 
 ### Config setup
 
-Copy config/example.config.js and save it as {env}.config.js
+Copy [config/example.config.js](https://github.com/antonnell/oriBalanceLoader/blob/master/config/example.config.js) and save it as {env}.config.js
 
-```
 {env} =
+```
 development
 production
 ```
@@ -44,7 +40,7 @@ Update the {env}.config.js file with the PostgreSQL connection details and Chain
 
 ### Chainparser Setup
 
-Run the [Chainparser](https://github.com/antonnell/oriChainstate) to generate the raw files
+Follow the instructions on the [Chainparser](https://github.com/antonnell/oriChainstate) to install and generate the raw files
 
 
 ## How to run
@@ -52,10 +48,12 @@ Run the [Chainparser](https://github.com/antonnell/oriChainstate) to generate th
 
 ```
 node import{Chain}Transactions.js
+```
 
 {chain} =
+```
 * bitcoin
-* bitoin-abc
+* bitoinCash
 * dash
 * litecoin
 ```
