@@ -1,5 +1,5 @@
 var pgp = require('pg-promise')(/*options*/)
-var config = require('config')
+var config = require('./config')
 
 function connectDB(){
   var cn = {
