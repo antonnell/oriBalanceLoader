@@ -13,12 +13,26 @@ create table bitcoin_utxo (
 );
 
 
+drop table if exists bitcoin_accounts;
+create table bitcoin_accounts (
+ acc_hash char(64),
+ balance bigint
+);
+
+
 drop table if exists bitcoin_cash_utxo;
 create table bitcoin_cash_utxo (
 	txn_hash char(64),
 	txn_no char(1),
 	address char(34),
 	amount bigint
+);
+
+
+drop table if exists bitcoin_cash_accounts;
+create table bitcoin_cash_accounts (
+ acc_hash char(64),
+ balance bigint
 );
 
 
@@ -31,6 +45,13 @@ create table litecoin_utxo (
 );
 
 
+drop table if exists litecoin_accounts;
+create table litecoin_accounts (
+ acc_hash char(64),
+ balance bigint
+);
+
+
 drop table if exists dash_utxo;
 create table dash_utxo (
 	txn_hash char(64),
@@ -39,12 +60,9 @@ create table dash_utxo (
 	amount bigint
 );
 
-drop table if exists claimed_tokens;
-create table claimed_tokens (
-  coin_address char(34),
-  coin_type varchar(36),
-  coin_amount float,
-  claim_address varchar(34),
-  claim_amount float,
-  created timestamp(6)
+
+drop table if exists dash_accounts;
+create table dash_accounts (
+ acc_hash char(64),
+ balance bigint
 );

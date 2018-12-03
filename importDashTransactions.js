@@ -1,4 +1,6 @@
 var pgp = require('pg-promise')(/*options*/)
+var async = require('async')
+var fs = require('fs')
 var config = require('./config')
 
 function connectDB(){
@@ -14,15 +16,68 @@ function connectDB(){
 
 console.log('Starting Dash')
 
-console.log('Connecting to DB')
-var db = connectDB()
-console.log('Importing File')
-copyCSV(db, handleDone)
+console.log('Reading files')
+fs.readdir(config.dashDump+'*.out', (err, files) => {
+  if(err){
+    console.log(err)
+    process.exit(2)
+  }
 
-function copyCSV(db, callback) {
+  if(files.length > 0) {
+
+    console.log('Connecting to DB')
+    var db = connectDB()
+    importFiles(files, db)
+
+  } else {
+    process.exit(1)
+  }
+})
+
+function importFiles(files, db) {
+  async.mapLimit(files, 10, (filename, callback) => {
+
+    let fileSplit = filename.splt('-')
+    if(fileSplit.length <= 1) {
+      return callback()
+    }
+
+    if(fileSplit[1] == 'dash') {
+      switch (fileSplit[0]) {
+        case 'cs':
+          copyUTXOs(db, filename, callback)
+          break;
+        case 'balances':
+          copyAccounts(db, filename, callback)
+          break;
+        default:
+          callback()
+      }
+    } else {
+      callback()
+    }
+  },
+  handleDone)
+}
+
+
+function copyUTXOs(db, filename, callback) {
   db.none("COPY dash_utxo FROM $1 delimiter ';';",
-  [config.dashDump])
-  .then(callback)
+  [config.dashDump+filename])
+  .then(() => {
+    fs.renameSync(congig.dashDump+filename, congig.dashArchive+filename)
+    callback()
+  })
+  .catch(callback)
+}
+
+function copyAccounts(db, filename, callback) {
+  db.none("COPY dash_accounts FROM $1 delimiter ';';",
+  [config.dashDump+filename])
+  .then(() => {
+    fs.renameSync(congig.dashDump+filename, congig.dashArchive+filename)
+    callback()
+  })
   .catch(callback)
 }
 

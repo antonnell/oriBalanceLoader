@@ -5,9 +5,13 @@ var config = {
   user: '',
   password: '',
   bitcoinDump: '',
+  bitcoinArchive: '',
   bitcoinABCDump: '',
+  bitcoinABCArchive: '',
   litecoinDump: '',
-  dashDump: ''
+  litecoinArchive: '',
+  dashDump: '',
+  dash: '',
 };
 
 module.exports = config;
