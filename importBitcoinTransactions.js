@@ -96,8 +96,12 @@ function copyUTXOs(db, filename, callback) {
 }
 
 function createTmpUTXO(db, callback) {
-  db.none('create table bitcoin_utxo_tmp (txn_hash char(64), txn_no char(1), address char(34), amount bigint);')
-  .then(callback)
+  db.none('drop table if exists bitcoin_utxo_tmp;')
+  .then(() => {
+    db.none('create table bitcoin_utxo_tmp (txn_hash char(64), txn_no char(1), address char(34), amount bigint);')
+    .then(callback)
+    .catch(callback)
+  }))
   .catch(callback)
 }
 
@@ -113,7 +117,7 @@ function transferUTXOs(db, callback){
   .then(() => {
     db.none('insert into bitcoin_utxo (txn_hash, txn_no, address, amount) select txn_hash, txn_no, address, amount from bitcoin_utxo_tmp;')
     .then(() => {
-      db.none('drop table bitcoin_utxo_tmp;')
+      db.none('drop table if exists bitcoin_utxo_tmp;')
       .then(callback)
       .catch(callback)
     })
