@@ -1,7 +1,3 @@
-CREATE DATABASE "origin"
-WITH ENCODING='UTF8'
- OWNER=postgres
- CONNECTION LIMIT=-1;
 
 
 drop table if exists bitcoin_utxo;

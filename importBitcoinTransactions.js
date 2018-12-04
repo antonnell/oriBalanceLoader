@@ -17,7 +17,7 @@ function connectDB(){
 console.log('Starting Bitcoin')
 
 console.log('Reading files')
-fs.readdir(config.bitcoinDump+'*.out', (err, files) => {
+fs.readdir(config.bitcoinDump, (err, files) => {
   if(err){
     console.log(err)
     process.exit(2)
@@ -37,7 +37,8 @@ fs.readdir(config.bitcoinDump+'*.out', (err, files) => {
 function importFiles(files, db) {
   async.mapLimit(files, 10, (filename, callback) => {
 
-    let fileSplit = filename.splt('-')
+    console.log(filename)
+    let fileSplit = filename.split('-')
     if(fileSplit.length <= 1) {
       return callback()
     }
