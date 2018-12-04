@@ -101,7 +101,7 @@ function createTmpUTXO(db, callback) {
     db.none('create table bitcoin_utxo_tmp (txn_hash char(64), txn_no char(1), address char(34), amount bigint);')
     .then(callback)
     .catch(callback)
-  }))
+  })
   .catch(callback)
 }
 
