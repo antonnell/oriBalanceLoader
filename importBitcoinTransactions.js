@@ -39,6 +39,9 @@ function importFiles(files, db) {
   async.mapLimit(files, 1, (filename, callback) => {
 
     console.log(filename)
+    if(filename.includes('.err')) {
+      return callback()
+    }
     let fileSplit = filename.split('-')
     if(fileSplit.length <= 1) {
       return callback()
